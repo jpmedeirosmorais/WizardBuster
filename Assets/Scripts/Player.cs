@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -7,6 +10,14 @@ public class Player : MonoBehaviour
     private Rigidbody2D playerRig;
     private Animator playerAnim;
     private SpriteRenderer sprite;
+    private TrailRenderer tr;
+    private bool isDashing = false;
+    private bool canDash = true;
+    [SerializeField] private int Essence = 0;
+    [SerializeField] protected float dashingPower;
+    [SerializeField] protected float dashingTime = 0.287f;
+    [SerializeField] protected float dashingCooldown = 1f;
+    [SerializeField] protected float LifePoints = 100f;
 
 
     void Start()
@@ -14,20 +25,47 @@ public class Player : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         playerRig = GetComponent<Rigidbody2D>();
         playerAnim = GetComponent<Animator>();
-        Physics.gravity = new Vector3(0f, -50f, 0f);
+        tr = GetComponent<TrailRenderer>();
     }
 
     void Update()
     {
+        limitSpeed();
         Actions();
     }
 
+    void limitSpeed()
+    {
+        float limitSpeedX = 10f;
+        float limitSpeedY = 7f;
 
+        if (playerRig.velocity.x > limitSpeedX)
+        {
+            playerRig.velocity = new Vector2(limitSpeedX, playerRig.velocity.y);
+        } else if (playerRig.velocity.y > limitSpeedY)
+        {
+            playerRig.velocity = new Vector2(playerRig.velocity.x, limitSpeedY);
+        }
+    }
 
     private void Actions()
     {
+        if (isDashing)
+        {
+            return;
+        }
         Walk();
         Attack();
+        Dash();
+    }
+
+    void Dash()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
+            playerAnim.SetTrigger("Dash");
+            StartCoroutine(Dashing());
+        }
     }
 
     private void Walk()
@@ -58,8 +96,56 @@ public class Player : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private IEnumerator Dashing()
     {
+        canDash = false;
+        isDashing = true;
+        playerRig.AddForce(playerRig.velocity * dashingPower, ForceMode2D.Impulse);
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        tr.emitting = false;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
+    }
 
+    void hit()
+    {
+        LifePoints = LifePoints - 10f;
+        if (LifePoints <= 0)
+        {
+            // player morreu
+            print("Morreu!");
+        }
+    }
+
+    void CollectEssence()
+    {
+        Essence+=5;
+        if (Essence%10 == 0)
+        {
+            LifePoints += 20f;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Enemy":
+                hit();
+                break;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Essence":
+                CollectEssence();
+                Destroy(collision.gameObject);
+                break;
+        }
     }
 }
