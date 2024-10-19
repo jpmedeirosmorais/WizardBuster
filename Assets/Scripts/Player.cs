@@ -25,7 +25,6 @@ public class Player : MonoBehaviour
     private void Actions()
     {
         Walk();
-        Jump();
         Attack();
     }
 
@@ -38,15 +37,6 @@ public class Player : MonoBehaviour
         playerRig.velocity= movement;
     }
 
-    private void Jump()
-    {
-        if (Input.GetButtonDown("Jump") && !isJumping)
-        {
-            isJumping = true;
-            playerRig.AddForce(new Vector3(0f, JumpForce, 0f), ForceMode.Impulse);
-        }
-    }
-
     private void Attack()
     {
 
@@ -54,11 +44,6 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        switch (collision.gameObject.layer)
-        {
-            case 6:
-                isJumping = false;
-                break;
-        }
+
     }
 }
