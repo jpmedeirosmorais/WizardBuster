@@ -7,7 +7,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float originalSpeed;
     [SerializeField] protected float attackRange;
     [SerializeField] protected float detectRange;
-    private bool seguindojogador = false;
     private GameObject player;
     private Rigidbody2D enemyRig;
 
@@ -38,7 +37,8 @@ public class Enemy : MonoBehaviour
             Vector2 direction = (player.transform.position - transform.position) * random;
             enemyRig.velocity = direction.normalized * speed;
             Attack();
-        } else
+        }
+        else
         {
             speed = 0f;
             Vector2 direction = (player.transform.position - transform.position);
@@ -52,7 +52,8 @@ public class Enemy : MonoBehaviour
         if (distanciajogador <= attackRange)
         {
             speed = 0f;
-        } else
+        }
+        else
         {
             speed = originalSpeed;
         }
@@ -61,6 +62,6 @@ public class Enemy : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireSphere(transform.position, detectRange);
     }
 }

@@ -1,24 +1,25 @@
 using System.Collections;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
 
     [SerializeField] protected float speed;
+    [SerializeField] private int Essence = 0;
+    [SerializeField] protected float dashingPower;
+    [SerializeField] protected float dashingTime = 0.287f;
+    [SerializeField] protected float dashingCooldown = 1f;
+    [SerializeField] protected float LifePoints = 100f;
+    [SerializeField] protected float attackCooldown = 0.2f;
+
     private Rigidbody2D playerRig;
     private Animator playerAnim;
     private SpriteRenderer sprite;
     private TrailRenderer tr;
     private bool isDashing = false;
     private bool canDash = true;
-    [SerializeField] private int Essence = 0;
-    [SerializeField] protected float dashingPower;
-    [SerializeField] protected float dashingTime = 0.287f;
-    [SerializeField] protected float dashingCooldown = 1f;
-    [SerializeField] protected float LifePoints = 100f;
-
+    private bool isAttacking = false;
+    private bool canAttack = true;
 
     void Start()
     {
@@ -42,7 +43,8 @@ public class Player : MonoBehaviour
         if (playerRig.velocity.x > limitSpeedX)
         {
             playerRig.velocity = new Vector2(limitSpeedX, playerRig.velocity.y);
-        } else if (playerRig.velocity.y > limitSpeedY)
+        }
+        else if (playerRig.velocity.y > limitSpeedY)
         {
             playerRig.velocity = new Vector2(playerRig.velocity.x, limitSpeedY);
         }
@@ -68,8 +70,24 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Attack()
+    {
+        if (Input.GetMouseButtonDown(0) && canAttack)
+        {
+            StartCoroutine(Attacking());
+        }
+    }
+
     private void Walk()
     {
+
+        if (isAttacking)
+        {
+            playerAnim.SetBool("Walk", false);
+            playerRig.velocity = Vector2.zero;
+            return;
+        }
+
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
@@ -87,13 +105,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Attack()
+    private IEnumerator Attacking()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            playerAnim.SetTrigger("Attack");
-        }
-
+        canAttack = false;
+        isAttacking = true;
+        playerAnim.SetTrigger("Attack");
+        yield return new WaitForSeconds(attackCooldown);
+        isAttacking = false;
+        yield return new WaitForSeconds(attackCooldown);
+        canAttack = true;
     }
 
     private IEnumerator Dashing()
@@ -114,15 +134,14 @@ public class Player : MonoBehaviour
         LifePoints = LifePoints - 10f;
         if (LifePoints <= 0)
         {
-            // player morreu
-            print("Morreu!");
+            Destroy(gameObject);
         }
     }
 
     void CollectEssence()
     {
-        Essence+=5;
-        if (Essence%10 == 0)
+        Essence += 5;
+        if (Essence % 10 == 0)
         {
             LifePoints += 20f;
         }
