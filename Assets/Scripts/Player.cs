@@ -4,11 +4,15 @@ public class Player : MonoBehaviour
 {
 
     [SerializeField] protected float speed;
+    private Rigidbody playerRig;
+    [SerializeField] protected float JumpForce;
+    [SerializeField] protected bool isJumping;
 
 
     void Start()
     {
-
+        playerRig = GetComponent<Rigidbody>();
+        Physics.gravity = new Vector3(0f, -50f, 0f);
     }
 
     void Update()
@@ -30,17 +34,31 @@ public class Player : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        Vector2 movement = new Vector2(horizontal, vertical);
-        transform.Translate(movement * speed * Time.deltaTime);
+        Vector3 movement = new Vector3(horizontal*speed, 0f ,vertical * speed);
+        playerRig.velocity= movement;
     }
 
     private void Jump()
     {
-        
+        if (Input.GetButtonDown("Jump") && !isJumping)
+        {
+            isJumping = true;
+            playerRig.AddForce(new Vector3(0f, JumpForce, 0f), ForceMode.Impulse);
+        }
     }
 
     private void Attack()
     {
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        switch (collision.gameObject.layer)
+        {
+            case 6:
+                isJumping = false;
+                break;
+        }
     }
 }
