@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e84dad46c79e4794ab71607706db7bb5
+guid: 58b09766c8094084889109a2cd96a732
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -136,13 +136,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Torch_0
+      name: Door_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 4
-        height: 10
+        width: 16
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,20 +150,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 97e9977c701c96c48856eb6cca983df8
-      internalID: 253268902
+      spriteID: 5133bc4dc1d9aff41bb8d1bfe8af9b24
+      internalID: -1674196298
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Torch_1
+      name: Door_1
       rect:
         serializedVersion: 2
-        x: 4
+        x: 16
         y: 0
-        width: 4
-        height: 10
+        width: 16
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,8 +171,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 355cd84f0db90a24c94f6186e0b4f46c
-      internalID: -2006370699
+      spriteID: 3b7664ffc9543744eb96e3cd5ce386bf
+      internalID: 1754488760
       vertices: []
       indices: 
       edges: []
@@ -188,8 +188,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Torch_0: 253268902
-      Torch_1: -2006370699
+      Door_0: -1674196298
+      Door_1: 1754488760
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
