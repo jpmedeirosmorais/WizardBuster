@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     private Animator animator;
     private GameObject player;
     private Rigidbody2D enemyRig;
+    private SpriteRenderer sprite;
     private bool isAttacking = false;
 
     void Start()
@@ -21,11 +22,12 @@ public class Enemy : MonoBehaviour
         enemyRig = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         player = GameObject.Find("Player");
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate()
@@ -81,7 +83,7 @@ public class Enemy : MonoBehaviour
     {
         speed = 0;
         LifePoints -= 10;
-
+        StartCoroutine(HitCooldown());
 
         if (LifePoints <= 0)
         {
@@ -112,5 +114,12 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         isAttacking = false;
+    }
+
+    IEnumerator HitCooldown()
+    {
+        sprite.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        sprite.color = Color.white;
     }
 }
