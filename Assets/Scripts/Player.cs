@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     private bool isAttacking = false;
     private bool canAttack = true;
     public Image healthBar;
+    public GameObject gameOverScreen;
 
     void Start()
     {
@@ -140,8 +141,15 @@ public class Player : MonoBehaviour
         healthBar.fillAmount = LifePoints / 100f;
         if (LifePoints <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    void Die()
+    {
+        gameOverScreen.SetActive(true);
+
+
     }
 
     void CollectEssence()
