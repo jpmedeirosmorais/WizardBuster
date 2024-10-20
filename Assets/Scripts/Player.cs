@@ -3,18 +3,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
+using TMPro;
+using TMPro.Examples;
 
 public class Player : MonoBehaviour
 {
 
     [SerializeField] protected float speed;
-    [SerializeField] private int Essence = 0;
+    [SerializeField] private int essence = 0;
     [SerializeField] protected float dashingPower;
     [SerializeField] protected float dashingTime = 0.287f;
     [SerializeField] protected float dashingCooldown = 1f;
     [SerializeField] protected float LifePoints = 100f;
     [SerializeField] protected float attackCooldown = 0.3f;
     [SerializeField] protected GameObject particles;
+    [SerializeField] protected GameObject souls;
+    [SerializeField] protected GameObject scrolls;
 
     private int memorypapers = 0;
     private Rigidbody2D playerRig;
@@ -40,6 +44,12 @@ public class Player : MonoBehaviour
     {
         limitSpeed();
         Actions();
+    }
+
+    void UIUpdate()
+    {
+        souls.GetComponent<TextMeshProUGUI>().text = essence.ToString();
+        scrolls.GetComponent<TextMeshProUGUI>().text = memorypapers.ToString();
     }
 
     void limitSpeed()
@@ -155,10 +165,11 @@ public class Player : MonoBehaviour
 
     void CollectEssence()
     {
-        Essence += 2;
-        if (Essence <= 20)
+        essence += 2;
+        UIUpdate();
+        if (essence <= 20)
         {
-            attackCooldown -= Essence / 100;
+            attackCooldown -= essence / 100;
         }
     }
 
@@ -166,6 +177,7 @@ public class Player : MonoBehaviour
     {
         Destroy(memoryPaper);
         memorypapers++;
+        UIUpdate();
         Debug.Log("Total Memory Papers: " + memorypapers);
     }
 
