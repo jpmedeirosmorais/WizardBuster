@@ -104,6 +104,7 @@ MonoBehaviour:
   originalSpeed: 0
   attackRange: 1.35
   detectRange: 7.5
+  LifePoints: 10
 --- !u!50 &6399159142947142939
 Rigidbody2D:
   serializedVersion: 4
@@ -163,8 +164,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0014561862, y: -0.036456168}
-  m_Size: {x: 0.20708764, y: 0.20708764}
+  m_Offset: {x: -0.010149002, y: 0.05637884}
+  m_Size: {x: 0.38811684, y: 1.5160646}
   m_Direction: 0
 --- !u!95 &-1491377919974636593
 Animator:

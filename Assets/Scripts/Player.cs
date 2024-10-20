@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] protected float dashingCooldown = 1f;
     [SerializeField] protected float LifePoints = 100f;
     [SerializeField] protected float attackCooldown = 0.2f;
+    [SerializeField] protected GameObject particles;
 
     private Rigidbody2D playerRig;
     private Animator playerAnim;
@@ -110,6 +111,7 @@ public class Player : MonoBehaviour
         canAttack = false;
         isAttacking = true;
         playerAnim.SetTrigger("Attack");
+        Instantiate(particles, new Vector3(transform.position.x, transform.position.y, 0f), Quaternion.identity);
         yield return new WaitForSeconds(attackCooldown);
         isAttacking = false;
         yield return new WaitForSeconds(attackCooldown);

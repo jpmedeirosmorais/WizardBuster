@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float originalSpeed;
     [SerializeField] protected float attackRange;
     [SerializeField] protected float detectRange;
+    [SerializeField] protected float LifePoints = 10;
     private GameObject player;
     private Rigidbody2D enemyRig;
 
@@ -65,6 +66,25 @@ public class Enemy : MonoBehaviour
         else
         {
             speed = originalSpeed;
+        }
+    }
+
+    void Hit()
+    {
+        LifePoints -= 10;
+        if (LifePoints <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "PlayerHit":
+                Hit();
+                break;
         }
     }
 
