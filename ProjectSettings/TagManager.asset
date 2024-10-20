@@ -10,6 +10,7 @@ TagManager:
   - MemoryPaper
   - ExitDoor
   - Pause
+  - EnemyAttack
   layers:
   - Default
   - TransparentFX

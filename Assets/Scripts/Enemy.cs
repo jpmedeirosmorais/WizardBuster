@@ -10,13 +10,16 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float detectRange;
     [SerializeField] protected float LifePoints = 10;
     [SerializeField] private GameObject prefabEssence;
+    private Animator animator;
     private GameObject player;
     private Rigidbody2D enemyRig;
+    private bool isAttacking = false;
 
     void Start()
     {
         originalSpeed = speed;
         enemyRig = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         player = GameObject.Find("Player");
     }
 
@@ -61,11 +64,14 @@ public class Enemy : MonoBehaviour
     private void Attack()
     {
         var distanciajogador = Vector2.Distance(player.transform.position, transform.position);
-        if (distanciajogador <= attackRange)
+        if (distanciajogador <= attackRange && !isAttacking)
         {
+            animator.SetTrigger("Attack");
+            isAttacking = true;
+            StartCoroutine(AttackCooldown());
             speed = 0f;
         }
-        else
+        else if (!isAttacking)
         {
             speed = originalSpeed;
         }
@@ -75,6 +81,8 @@ public class Enemy : MonoBehaviour
     {
         speed = 0;
         LifePoints -= 10;
+
+
         if (LifePoints <= 0)
         {
             Instantiate(prefabEssence, new Vector2(transform.position.x + Random.Range(0, 5), transform.position.y + Random.Range(0, 5)), Quaternion.identity);
@@ -98,5 +106,11 @@ public class Enemy : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectRange);
+    }
+
+    IEnumerator AttackCooldown()
+    {
+        yield return new WaitForSeconds(1f);
+        isAttacking = false;
     }
 }

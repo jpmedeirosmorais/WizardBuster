@@ -128,7 +128,8 @@ public class Player : MonoBehaviour
         if ((horizontal != 0 || vertical != 0) && !walk.isPlaying)
         {
             walk.Play();
-        } else if (horizontal + vertical == 0)
+        }
+        else if (horizontal + vertical == 0)
         {
             walk.Stop();
         }
@@ -216,21 +217,6 @@ public class Player : MonoBehaviour
         Debug.Log("Total Memory Papers: " + memorypapers);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        switch (collision.gameObject.tag)
-        {
-            case "Enemy":
-                if (!isDashing)
-                {
-                    hit();
-                }
-                break;
-        }
-    }
-
-
-
     private void EndGameManager(GameObject exitDoor)
     {
         int memories = GameObject.FindGameObjectsWithTag("MemoryPaper").Length;
@@ -260,6 +246,13 @@ public class Player : MonoBehaviour
                 break;
             case "ExitDoor":
                 EndGameManager(collision.gameObject);
+                break;
+            case "EnemyAttack":
+                Debug.Log("Player hit by enemy");
+                if (!isDashing)
+                {
+                    hit();
+                }
                 break;
         }
     }
