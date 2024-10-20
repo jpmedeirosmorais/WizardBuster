@@ -88,7 +88,7 @@ public class Enemy : MonoBehaviour
         {
             case "PlayerHit":
                 Vector2 direction = (collision.gameObject.transform.position - transform.position).normalized;
-                enemyRig.AddForce(direction * Random.Range(4, 10), ForceMode2D.Impulse);
+                enemyRig.AddForce(direction * 20, ForceMode2D.Impulse);
                 Hit();
                 break;
         }
