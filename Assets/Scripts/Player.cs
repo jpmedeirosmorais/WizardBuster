@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] protected GameObject particles;
     [SerializeField] protected GameObject souls;
     [SerializeField] protected GameObject scrolls;
+    [SerializeField] protected GameObject pauseMenu;
 
     private int memorypapers = 0;
     private Rigidbody2D playerRig;
@@ -44,12 +45,22 @@ public class Player : MonoBehaviour
     {
         limitSpeed();
         Actions();
+        pause();
     }
 
     void UIUpdate()
     {
         souls.GetComponent<TextMeshProUGUI>().text = essence.ToString();
         scrolls.GetComponent<TextMeshProUGUI>().text = memorypapers.ToString();
+    }
+
+    private void pause()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0f;
+            pauseMenu.SetActive(true);
+        }
     }
 
     void limitSpeed()
@@ -158,9 +169,8 @@ public class Player : MonoBehaviour
 
     void Die()
     {
+        Time.timeScale = 0f;
         gameOverScreen.SetActive(true);
-
-
     }
 
     void CollectEssence()

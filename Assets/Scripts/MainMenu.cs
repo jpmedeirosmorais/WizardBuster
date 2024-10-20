@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] protected GameObject pauseMenu;
 
     public void StartGame()
     {
@@ -12,5 +13,16 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void Continue()
+    {
+        Time.timeScale = 1.0f;
+        pauseMenu.SetActive(false);
+    }
+
+    public void ReturnMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

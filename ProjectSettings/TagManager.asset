@@ -9,6 +9,7 @@ TagManager:
   - PlayerHit
   - MemoryPaper
   - ExitDoor
+  - Pause
   layers:
   - Default
   - TransparentFX
