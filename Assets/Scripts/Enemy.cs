@@ -41,8 +41,17 @@ public class Enemy : MonoBehaviour
         else
         {
             speed = 0f;
-            Vector2 direction = (player.transform.position - transform.position);
+            Vector2 direction = player.transform.position - transform.position;
             enemyRig.velocity = direction.normalized * speed;
+        }
+
+        if (enemyRig.velocity.x <= -0.01f)
+        {
+            transform.localScale = new Vector2(-1f, 1f);
+        }
+        else if (enemyRig.velocity.x >= 0.01f)
+        {
+            transform.localScale = new Vector2(1f, 1f);
         }
     }
 
