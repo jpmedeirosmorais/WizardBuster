@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
 
     void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if (Input.GetAxis("Jump") != 0 && canDash)
         {
             playerAnim.SetTrigger("Dash");
             StartCoroutine(Dashing());
@@ -100,7 +100,7 @@ public class Player : MonoBehaviour
 
     private void Attack()
     {
-        if (Input.GetMouseButtonDown(0) && canAttack)
+        if (Input.GetAxis("Fire1") != 0 && canAttack)
         {
             StartCoroutine(Attacking());
         }
