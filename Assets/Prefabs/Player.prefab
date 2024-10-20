@@ -49,7 +49,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.64
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.87
+  m_Intensity: 0.5
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -240,8 +240,9 @@ MonoBehaviour:
   dashingTime: 0.16
   dashingCooldown: 1
   LifePoints: 100
-  attackCooldown: 0.5
+  attackCooldown: 0.2
   particles: {fileID: 6202263855678734461, guid: 33e7cbd444b63ef4b90ec0b71ea22ec7, type: 3}
+  healthBar: {fileID: 0}
 --- !u!70 &8839010659604247523
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -426,7 +427,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3070716992881723219}
-  - component: {fileID: 4282211712612894777}
+  - component: {fileID: 1963372956726691226}
   m_Layer: 0
   m_Name: hitbox
   m_TagString: PlayerHit
@@ -449,8 +450,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7284218055538129683}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &4282211712612894777
-BoxCollider2D:
+--- !u!58 &1963372956726691226
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -481,16 +482,6 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.036380768, y: -0.02005291}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 1.0056515, y: -0.016973615}
   serializedVersion: 2
-  m_Size: {x: 2.373457, y: 2.4373417}
-  m_EdgeRadius: 0
+  m_Radius: 1.2765164

@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] protected float dashingTime = 0.287f;
     [SerializeField] protected float dashingCooldown = 1f;
     [SerializeField] protected float LifePoints = 100f;
-    [SerializeField] protected float attackCooldown = 0.2f;
+    [SerializeField] protected float attackCooldown = 0.3f;
     [SerializeField] protected GameObject particles;
 
     private int memorypapers = 0;
@@ -89,7 +89,6 @@ public class Player : MonoBehaviour
         if (isAttacking)
         {
             playerAnim.SetBool("Walk", false);
-            playerRig.velocity = Vector2.zero;
             return;
         }
 
@@ -102,11 +101,11 @@ public class Player : MonoBehaviour
 
         if (horizontal < 0)
         {
-            sprite.flipX = true;
+            gameObject.transform.localScale = new Vector3(-1, gameObject.transform.localScale.y, gameObject.transform.localScale.z);
         }
         else if (horizontal > 0)
         {
-            sprite.flipX = false;
+            gameObject.transform.localScale = new Vector3(1, gameObject.transform.localScale.y, gameObject.transform.localScale.z);
         }
     }
 
@@ -115,7 +114,7 @@ public class Player : MonoBehaviour
         canAttack = false;
         isAttacking = true;
         playerAnim.SetTrigger("Attack");
-        Instantiate(particles, new Vector3(transform.position.x, transform.position.y, 0f), Quaternion.identity);
+        Instantiate(particles, new Vector3(transform.position.x + gameObject.transform.localScale.x, transform.position.y, 0f), Quaternion.identity);
         yield return new WaitForSeconds(attackCooldown);
         isAttacking = false;
         yield return new WaitForSeconds(attackCooldown);
@@ -147,13 +146,11 @@ public class Player : MonoBehaviour
 
     void CollectEssence()
     {
-        Essence += 5;
-        if (Essence % 10 == 0)
+        Essence += 2;
+        if (Essence <= 20)
         {
-            LifePoints += 20f;
+            attackCooldown -= Essence / 100;
         }
-
-        Debug.Log("Total Essence: " + Essence);
     }
 
     void CollectMemoryPaper(GameObject memoryPaper)
@@ -168,7 +165,10 @@ public class Player : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "Enemy":
-                hit();
+                if (!isDashing)
+                {
+                    hit();
+                }
                 break;
         }
     }

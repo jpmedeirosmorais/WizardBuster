@@ -6586,10 +6586,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6287372763720082412, guid: 4daa34f2ae1de934da7e3320dc8da2a8, type: 3}
-      propertyPath: m_Intensity
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 6520115145260252271, guid: 4daa34f2ae1de934da7e3320dc8da2a8, type: 3}
       propertyPath: m_Name
       value: Player
@@ -6638,10 +6634,6 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 981344481}
-    - target: {fileID: 8546083526165290715, guid: 4daa34f2ae1de934da7e3320dc8da2a8, type: 3}
-      propertyPath: attackCooldown
-      value: 0.2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

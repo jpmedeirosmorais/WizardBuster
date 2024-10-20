@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -72,12 +73,12 @@ public class Enemy : MonoBehaviour
 
     void Hit()
     {
+        speed = 0;
         LifePoints -= 10;
-        int random = Random.Range(1, 2);
         if (LifePoints <= 0)
         {
+            Instantiate(prefabEssence, new Vector2(transform.position.x + Random.Range(0, 5), transform.position.y + Random.Range(0, 5)), Quaternion.identity);
             Destroy(this.gameObject);
-            Instantiate(prefabEssence, new Vector2(transform.position.x + random, transform.position.y + random), Quaternion.identity);
         }
     }
 
@@ -86,6 +87,8 @@ public class Enemy : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "PlayerHit":
+                Vector2 direction = (collision.gameObject.transform.position - transform.position).normalized;
+                enemyRig.AddForce(direction * Random.Range(4, 10), ForceMode2D.Impulse);
                 Hit();
                 break;
         }
