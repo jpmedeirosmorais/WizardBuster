@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class Player : MonoBehaviour
 {
@@ -185,14 +186,11 @@ public class Player : MonoBehaviour
 
     private void EndGameManager(GameObject exitDoor)
     {
-        // if (Input.GetKeyDown(KeyCode.E))
-        // {
-
-        // }
-        if (memorypapers == 1)
+        int memories = GameObject.FindGameObjectsWithTag("MemoryPaper").Length;
+        if (memories == 0)
         {
             Debug.Log("Parabéns! Você conseguiu escapar!");
-            SceneManager.LoadScene("Credits");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
         else
         {
