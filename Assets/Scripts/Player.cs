@@ -20,6 +20,9 @@ public class Player : MonoBehaviour
     [SerializeField] protected GameObject souls;
     [SerializeField] protected GameObject scrolls;
     [SerializeField] protected GameObject pauseMenu;
+    [SerializeField] protected AudioSource walk;
+    [SerializeField] protected AudioSource explosion;
+    [SerializeField] protected AudioSource collect;
 
     private int memorypapers = 0;
     private Rigidbody2D playerRig;
@@ -122,6 +125,14 @@ public class Player : MonoBehaviour
         playerRig.velocity = movement;
         playerAnim.SetBool("Walk", horizontal != 0 || vertical != 0);
 
+        if ((horizontal != 0 || vertical != 0) && !walk.isPlaying)
+        {
+            walk.Play();
+        } else if (horizontal + vertical == 0)
+        {
+            walk.Stop();
+        }
+
         if (horizontal < 0)
         {
             gameObject.transform.localScale = new Vector3(-1, gameObject.transform.localScale.y, gameObject.transform.localScale.z);
@@ -134,6 +145,10 @@ public class Player : MonoBehaviour
 
     private IEnumerator Attacking()
     {
+        if (!explosion.isPlaying)
+        {
+            explosion.Play();
+        }
         canAttack = false;
         isAttacking = true;
         playerAnim.SetTrigger("Attack");
@@ -173,10 +188,19 @@ public class Player : MonoBehaviour
         gameOverScreen.SetActive(true);
     }
 
+    void collectSound()
+    {
+        if (!collect.isPlaying)
+        {
+            collect.Play();
+        }
+    }
+
     void CollectEssence()
     {
         essence += 2;
         UIUpdate();
+        collectSound();
         if (essence <= 20)
         {
             attackCooldown -= essence / 100;
@@ -188,6 +212,7 @@ public class Player : MonoBehaviour
         Destroy(memoryPaper);
         memorypapers++;
         UIUpdate();
+        collectSound();
         Debug.Log("Total Memory Papers: " + memorypapers);
     }
 
