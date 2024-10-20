@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     private bool canDash = true;
     private bool isAttacking = false;
     private bool canAttack = true;
+    public Image healthBar;
 
     void Start()
     {
@@ -135,6 +137,7 @@ public class Player : MonoBehaviour
     void hit()
     {
         LifePoints = LifePoints - 10f;
+        healthBar.fillAmount = LifePoints / 100f;
         if (LifePoints <= 0)
         {
             Destroy(gameObject);
