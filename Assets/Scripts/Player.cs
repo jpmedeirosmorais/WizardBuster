@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -173,6 +174,26 @@ public class Player : MonoBehaviour
     }
 
 
+
+    private void EndGameManager(GameObject exitDoor)
+    {
+        // if (Input.GetKeyDown(KeyCode.E))
+        // {
+
+        // }
+        if (memorypapers == 1)
+        {
+            Debug.Log("Parabéns! Você conseguiu escapar!");
+            SceneManager.LoadScene("Credits");
+        }
+        else
+        {
+            Debug.Log("Para abrir a porta é necessário coletar todas as memórias!");
+        }
+
+    }
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         switch (collision.gameObject.tag)
@@ -183,6 +204,9 @@ public class Player : MonoBehaviour
                 break;
             case "MemoryPaper":
                 CollectMemoryPaper(collision.gameObject);
+                break;
+            case "ExitDoor":
+                EndGameManager(collision.gameObject);
                 break;
         }
     }
