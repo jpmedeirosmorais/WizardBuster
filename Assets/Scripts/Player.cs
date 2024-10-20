@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] protected float attackCooldown = 0.2f;
     [SerializeField] protected GameObject particles;
 
+    private int memorypapers = 0;
     private Rigidbody2D playerRig;
     private Animator playerAnim;
     private SpriteRenderer sprite;
@@ -147,6 +148,15 @@ public class Player : MonoBehaviour
         {
             LifePoints += 20f;
         }
+
+        Debug.Log("Total Essence: " + Essence);
+    }
+
+    void CollectMemoryPaper(GameObject memoryPaper)
+    {
+        Destroy(memoryPaper);
+        memorypapers++;
+        Debug.Log("Total Memory Papers: " + memorypapers);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -159,6 +169,7 @@ public class Player : MonoBehaviour
         }
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         switch (collision.gameObject.tag)
@@ -166,6 +177,9 @@ public class Player : MonoBehaviour
             case "Essence":
                 CollectEssence();
                 Destroy(collision.gameObject);
+                break;
+            case "MemoryPaper":
+                CollectMemoryPaper(collision.gameObject);
                 break;
         }
     }

@@ -104,7 +104,8 @@ MonoBehaviour:
   originalSpeed: 0
   attackRange: 1.35
   detectRange: 7.5
-  LifePoints: 10
+  LifePoints: 30
+  prefabEssence: {fileID: 2541827262036778909, guid: 6dd896585c69c57439f53b0502c1ec7b, type: 3}
 --- !u!50 &6399159142947142939
 Rigidbody2D:
   serializedVersion: 4

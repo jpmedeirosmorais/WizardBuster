@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float attackRange;
     [SerializeField] protected float detectRange;
     [SerializeField] protected float LifePoints = 10;
+    [SerializeField] private GameObject prefabEssence;
     private GameObject player;
     private Rigidbody2D enemyRig;
 
@@ -72,9 +73,11 @@ public class Enemy : MonoBehaviour
     void Hit()
     {
         LifePoints -= 10;
+        int random = Random.Range(1, 2);
         if (LifePoints <= 0)
         {
             Destroy(this.gameObject);
+            Instantiate(prefabEssence, new Vector2(transform.position.x + random, transform.position.y + random), Quaternion.identity);
         }
     }
 
