@@ -175,7 +175,7 @@ public class Player : MonoBehaviour
 
     void hit()
     {
-        LifePoints = LifePoints - 10f;
+        LifePoints = LifePoints - 7f;
         healthBar.fillAmount = LifePoints / 100f;
         if (LifePoints <= 0)
         {
